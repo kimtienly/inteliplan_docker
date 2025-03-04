@@ -1,0 +1,5 @@
+BoundingBox external_bb
+BoundingBox[] crop_bbs
+string stl_path
+---
+bool flag

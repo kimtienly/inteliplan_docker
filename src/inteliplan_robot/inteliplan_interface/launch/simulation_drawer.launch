@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    
+
+    <include file="$(find yolo_pointcloud)/launch/hsr_world.launch">
+        <arg name="paused" value="true"/>
+        <arg name="rviz" value="false"/>
+    </include>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find yolo_pointcloud)/test_objs/StorageFurniture_0/model.urdf -urdf -z 0.4 -x 1.5 -model my_object" />
+    <!-- <node name="spawn_table" pkg="gazebo_ros" type="spawn_model" args="-file $(find tmc_gazebo_worlds)/models/kitchen_lowtable/model-1_4.sdf -sdf -y 1.4 -Y 1.5708 -model table" />
+    <node name="spawn_can" pkg="gazebo_ros" type="spawn_model" args="-file $(find tmc_gazebo_worlds)/models/hsr_coke/model-1_4.sdf -sdf -z 0.5 -x 1.4 -model can -unpause" /> -->
+    <include file="$(find yolo_pointcloud)/launch/yolo3D.launch"/>
+
+    <!-- <include file="$(find orion_recognition)/launch/recognition.launch" /> -->
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="1"/>
+        <arg name="pos" value="-x 0 -y 1.3 -z 0 -Y 1.57"/>
+        <arg name="model_name" value="kitchen_table"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="2"/>
+        <arg name="pos" value="-x 0 -y 1.03 -z 0.8 -Y 0"/>
+        <arg name="model_name" value="small_bottle"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="3"/>
+        <arg name="pos" value="-x 0.5 -y 1.1 -z 0.8 -Y 0"/>
+        <arg name="model_name" value="apple"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+
+
+</launch>

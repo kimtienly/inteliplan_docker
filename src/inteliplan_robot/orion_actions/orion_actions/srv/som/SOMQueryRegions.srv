@@ -1,0 +1,7 @@
+# This queries for the regions themselves.
+
+SOMBoxRegion query
+
+---
+
+SOMBoxRegion[] returns

@@ -1,0 +1,23 @@
+services:
+  inteliplan_docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inteliplan_docker
+    environment:
+      - ROS_MASTER_URI=http://${HSR_IP}:11311
+      - ROS_HOSTNAME=${YOUR_IP}
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    extra_hosts:
+      - "${HSR_HOSTNAME}:${HSR_IP}"
+    privileged: true
+    runtime: nvidia
+    network_mode: "host"
+    tty: true
+    volumes:
+      - ./src:/inteliplan_ws/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw

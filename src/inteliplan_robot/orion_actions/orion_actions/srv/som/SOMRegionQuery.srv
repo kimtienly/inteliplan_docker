@@ -1,0 +1,9 @@
+# This is to query for objects within a region.
+# Query for objects within `region_name` matching `query` and return a list of objects of that type. 
+
+string region_name
+SOMObject query
+
+---
+
+SOMObject[] returns

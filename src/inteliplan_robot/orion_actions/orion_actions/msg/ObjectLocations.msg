@@ -1,0 +1,1 @@
+ObjectLocation[] object_locations

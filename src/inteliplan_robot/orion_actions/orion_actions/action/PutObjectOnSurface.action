@@ -1,0 +1,25 @@
+# Define the goal TF to aim for. The surface to be placed on will be autodetected (if goal_tf is within ~15cm of the surface).
+string goal_tf
+# Whether to give up if a plane to place on cannot be detected. If false, when a plane is not detected the action will place the object at goal_tf itself.
+bool abandon_action_if_no_plane_found
+# How far above the surface to "drop" the object. It makes sense to drop bin bags a bit above the floor, for example. It makes less sense to drop fragile objects so this should be 0.0 by default. Negative values *shouldn't* result in the robot placing the item through solid surfaces, but don't try it anyway.
+float32 drop_object_by_metres
+# The robot will check that a weight change of check_weight_grams grams has occured after placing the object, e.g. to detect whether the object is somehow caught on the gripper. If detected_weight_change < check_weight_grams, the robot will wiggle the gripper to try to drop the object. Weight checking is not precise, so give the smallest practical weight change for the object being placed. If <=0, no weight checking will be carried out.
+float32 check_weight_grams
+
+# If 0, then we will default to 0.1. 
+float32 object_half_height
+
+# tf_name for the hard-coded shelf
+string shelf_tf_ref
+---
+# Define the result
+bool result
+byte failure_mode
+byte SUCCESS=0
+byte TF_NOT_FOUND=1
+byte PLACING_EXCEPTION=2
+byte PLACING_FAILED=3
+---
+# Define a feedback message
+

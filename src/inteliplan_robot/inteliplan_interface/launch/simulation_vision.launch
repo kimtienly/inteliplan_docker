@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="debug" default="false"/>
+    <arg name="use_manipulation" default="true" />
+    <arg name="use_navigation" default="true" />
+    <arg name="use_perception" default="true" />
+    <arg name="use_task" default="true" />
+    <arg name="use_teleop" default="false" />
+    <arg name="use_web" default="false" />
+    <arg name="use_laser_odom" default="false" />
+    <arg name="paused" default="true" />
+    <arg name="fast_physics" default="false" />
+    <arg name="robot_name" default="$(optenv ROBOT_NAME hsrb)" />
+    
+    <!-- Robot simulation -->
+    <include file="$(find hsrb_gazebo_launch)/launch/hsrb_empty_world.launch" pass_all_args="true" />
+
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="1"/>
+        <arg name="pos" value="-x 1.5 -y 0 -z 0 -Y 0"/>
+        <arg name="model_name" value="kitchen_table"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="2"/>
+        <arg name="pos" value="-x 1.2 -y 0 -z 0.9 -Y 0"/>
+        <arg name="model_name" value="small_bottle"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+    
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="3"/>
+        <arg name="pos" value="-x 0.2 -y -1.5 -z 0 -Y 1.57"/>
+        <arg name="model_name" value="high_shelf"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="4"/>
+        <arg name="pos" value="-x 0 -y -1.6 -z 0.8 -Y 0"/>
+        <arg name="model_name" value="apple"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="6"/>
+        <arg name="pos" value="-x 1.5 -y -0.3 -z 0.8 -Y 0"/>
+        <arg name="model_name" value="apple"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+    <include file="$(find inteliplan_interface)/launch/spawn_sim_object_from_package.launch">
+        <arg name="id" value="7"/>
+        <arg name="pos" value="-x 0.1 -y -1.6 -z 0.65 -Y 0"/>
+        <arg name="model_name" value="banana"/>
+        <arg name="model_suffix" value="-1_4"/>
+        <arg name="package_name" value="tmc_gazebo_worlds"/>
+    </include>
+
+
+    <!-- Recognition pipeline -->
+    <!-- <node pkg="orion_recognition" type="bbox_publisher_node.py" name="bbox_publisher_node" output="screen" /> -->
+    <include file="$(find orion_recognition)/launch/recognition.launch" />
+
+</launch>

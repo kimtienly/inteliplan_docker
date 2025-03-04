@@ -1,0 +1,8 @@
+SOMObject obj1
+Relation relation
+SOMObject obj2
+geometry_msgs/Pose current_robot_pose
+
+---
+
+Match[] matches

@@ -1,0 +1,5 @@
+sensor_msgs/PointCloud2 cloud
+int32 sample_num
+---
+bool success
+geometry_msgs/Point[] samples

@@ -1,0 +1,20 @@
+# Define the goal
+string goal_tf
+float32[] approach_axis
+float32 extend_distance
+bool is_bin_bag
+
+# This will toggle looking into SOM, working out the global pose, and then using that tf.
+# False by default for back compatibility.
+bool publish_own_tf
+---
+# Define the result
+bool result
+byte failure_mode
+byte SUCCESS=0
+byte TF_NOT_FOUND=1
+byte TF_TIMEOUT=2
+byte GRASPING_FAILED=3
+---
+# Define a feedback message
+

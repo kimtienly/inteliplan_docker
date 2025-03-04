@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="orion_recognition" type="bbox_publisher_node.py" name="bbox_publisher_node" output="screen" />
+    <node pkg="orion_recognition" type="detection_tf_publisher_node.py" name="detection_tf_publisher_node" output="screen" />
+</launch>

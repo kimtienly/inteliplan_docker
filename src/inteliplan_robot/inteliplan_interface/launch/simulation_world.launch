@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="debug" default="false"/>
+    <arg name="use_manipulation" default="true" />
+    <arg name="use_navigation" default="true" />
+    <arg name="use_perception" default="true" />
+    <arg name="use_task" default="true" />
+    <arg name="use_teleop" default="false" />
+    <arg name="use_web" default="false" />
+    <arg name="use_laser_odom" default="false" />
+    <arg name="paused" default="true" />
+    <arg name="fast_physics" default="false" />
+    <arg name="robot_name" default="$(optenv ROBOT_NAME hsrb)" />
+    
+    <!-- Robot simulation -->
+
+  <include file="$(find hsrb_gazebo_launch)/launch/include/hsrb_gazebo_common.xml" pass_all_args="true" >
+    <arg name="map" default="$(find tmc_potential_maps)/maps/white_space/map.yaml" />
+    <!-- <arg name="world_name" value="$(find inteliplan_interface)/worlds/room_small.world" /> -->
+    <arg name="world_name" value="$(find inteliplan_interface)/worlds/shifted_world.world" />
+    <arg name="robot_pos" value="-x 2.2 -y 0 -z 0 -Y 3.14" />
+    <arg name="ground_truth_xyz_offset" value="-5.0\ -6.6\ 0.0" />
+    <arg name="ground_truth_rpy_offset" value="0.0\ 0.0\ 0.0" />
+  </include>
+
+    <!-- Recognition pipeline -->
+    <include file="$(find orion_recognition)/launch/recognition.launch" />
+
+
+</launch>

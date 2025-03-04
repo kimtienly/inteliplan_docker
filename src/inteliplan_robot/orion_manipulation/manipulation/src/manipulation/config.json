@@ -1,0 +1,294 @@
+{
+
+	"ar_marker/201":{
+		"grasp_pose": "ar",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+	"dog_plush_toy":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.08,0.08,0.10]
+	},
+
+	"rabbit_plush_toy":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.08,0.08,0.10]
+	},
+
+	"hedgehog_plush_toy":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.08,0.08,0.08]
+	},
+
+	"postcard_with_moon_image":{
+		"grasp_pose": "suction",
+		"estimated_halfsize": [0.06,0.06,0.0005]
+	},
+
+	"postcard_with_temple_image":{
+		"grasp_pose": "suction",
+		"estimated_halfsize": [0.06,0.06,0.0005]
+	},
+
+	"postcard_with_waterfall_image":{
+		"grasp_pose": "suction",
+		"estimated_halfsize": [0.06,0.06,0.0005]
+	},
+
+
+	"bus_toy_car":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"fire_engine_toy_car":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"police_toy_car":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"whistle_sound_toy":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"shaker_sound_toy":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"horn_sound_toy":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.04,0.02,0.02]
+	},
+
+
+	"cube_block":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.03,0.03,0.03]
+	},
+
+
+	"triangular_block":{
+		"grasp_pose":  "horizontal",
+		"estimated_halfsize": [0.03,0.03,0.03]
+	},
+
+
+	"cylinder_block":{
+		"grasp_pose":  "horizontal",
+		"estimated_halfsize": [0.03,0.03,0.04]
+	},
+
+
+	"wooden_bowl":{
+		"grasp_pose": "above_offset",	
+		"offset": 0.05,
+		"estimated_halfsize": [0.08,0.08,0.06]
+	},
+
+
+	"brown_pail":{
+		"grasp_pose": "above_offset",	
+		"offset": 0.10,
+		"estimated_halfsize": [0.10,0.10,0.13]
+	},
+
+
+	"mixed_nuts":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.08,0.04]
+	},
+
+
+	"blue_cup":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"pink_cup":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"orange_biscuits":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.03,0.03]
+	},
+
+
+	"yellow_biscuits":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.03,0.03]
+	},
+
+
+	"watering_can":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.10,0.10,0.13]
+	},
+
+
+	"flashlight":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.04,0.04]
+	},
+
+
+	"blue_fork":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.04,0.04]
+	},
+
+
+	"green_fork":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.07,0.07,0.01]
+	},
+
+
+	"gray_knife":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.07,0.07,0.01]
+	},
+
+
+	"pink_biscuits":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.03,0.03]
+	},
+
+
+	"yellow_clock":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"aluminum_foil":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.08,0.05,0.03]
+	},
+
+
+	"green_dish":{
+		"grasp_pose": "horizontal_rotate",
+		"estimated_halfsize": [0.10,0.10,0.02]
+	},
+
+
+	"yellow_dish":{
+		"grasp_pose": "horizontal_rotate",
+		"estimated_halfsize": [0.10,0.10,0.02]
+	},
+
+	"bowl_0":{
+		"grasp_pose": "above_offset",
+		"estimated_halfsize": [0.08,0.08,0.06]
+	},
+
+	"pink_bowl":{
+		"grasp_pose": "above_offset",
+		"estimated_halfsize": [0.08,0.08,0.06]
+	},
+
+
+	"blue_bowl":{
+		"grasp_pose": "above_offset",
+		"estimated_halfsize": [0.08,0.08,0.06]
+	},
+
+
+	"mineral_water":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"oolong_tea":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"ketchup":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"canned_mustard":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"orange_drink":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"green_drink":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"tomato":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.05,0.05,0.05]
+	},
+
+
+	"potato":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.05,0.05,0.05]
+	},
+
+
+	"plant":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.06,0.06,0.08]
+	},
+
+
+	"spray":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.08]
+	},
+
+
+	"water_bottle":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"blueberry_drink":{
+		"grasp_pose": "horizontal",
+		"estimated_halfsize": [0.07,0.07,0.07]
+	},
+
+
+	"eggplant":{
+		"grasp_pose": "above",
+		"estimated_halfsize": [0.07,0.07,0.05]
+	}
+
+
+
+
+
+}

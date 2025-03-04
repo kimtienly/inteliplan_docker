@@ -1,0 +1,10 @@
+geometry_msgs/Point dims
+float32 maxHeight
+
+geometry_msgs/Transform search_axis
+float32 eps_degrees_tolerance
+float32 search_box_dimension
+float32 min_surface_height
+---
+bool success
+float32[] position

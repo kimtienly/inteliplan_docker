@@ -1,0 +1,6 @@
+geometry_msgs/Point center
+geometry_msgs/Point dims
+float32 maxHeight
+---
+bool isAvailable
+bool isSupported

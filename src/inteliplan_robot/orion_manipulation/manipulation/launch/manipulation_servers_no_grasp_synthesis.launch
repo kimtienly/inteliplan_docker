@@ -1,0 +1,20 @@
+<launch>
+
+	 <node name="pick_up_object_server" pkg="manipulation" type="pick_up_object_server.py" output="screen"> </node>
+	 <node name="put_object_on_surface" pkg="manipulation" type="put_object_on_surface_server.py" output="screen"> </node>
+	 
+	 
+	<!-- Point cloud processing: segmentation for grasping synthesis -->
+	<node name="object_segmentation_node" pkg="point_cloud_filtering" type="object_segmentation_node" output="screen">
+		<remap from="cloud_in" to="/hsrb/head_rgbd_sensor/depth_registered/rectified_points"/>
+	</node>
+
+	<!-- Point cloud processing: segmentation for surface detection -->
+	<node name="surface_segmentation_node" pkg="point_cloud_filtering" type="surface_segmentation_node" output="screen">
+		<remap from="cloud_in" to="/hsrb/head_rgbd_sensor/depth_registered/rectified_points"/>
+	</node>
+
+	  <!-- Load the collision map services -->
+	  <include file="$(find manipulation)/launch/octomap_server.launch"> </include>
+
+</launch>

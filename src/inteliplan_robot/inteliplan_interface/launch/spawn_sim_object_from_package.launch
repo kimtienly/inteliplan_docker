@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- Deprecated. Here to maintain back compatibility. -->
+<launch>
+  <arg name="id"              default="1"/>
+  <arg name="pos"             default="-x -0.3 -y -7.30 -z 1.107 -Y -1.343126"/>
+  <arg name="model_name"      default="small_bottle"/>
+  <arg name="model_suffix"    default="-1_4"/>      <!-- specify the model version, if necessary -->
+  <arg name="package_name"    default="tmc_gazebo_worlds"/>
+
+  <arg name="package_dir"     value="$(eval find(arg('package_name')))"/>
+
+  <!-- Spawn a model into Gazebo -->
+  <node name="spawn_urdf_$(arg id)"
+        pkg="gazebo_ros" 
+        type="spawn_model"
+        args="-file $(arg package_dir)/models/$(arg model_name)/model$(arg model_suffix).sdf -sdf -model $(arg model_name)_$(arg id) -b $(arg pos)" />
+
+</launch>

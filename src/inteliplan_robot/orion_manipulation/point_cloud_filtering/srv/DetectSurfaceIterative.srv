@@ -1,0 +1,7 @@
+geometry_msgs/Transform search_axis
+float32 eps_degrees_tolerance
+float32 search_box_dimension
+bool hide_display
+---
+bool success
+sensor_msgs/PointCloud2[] surfaces

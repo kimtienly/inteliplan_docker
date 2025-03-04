@@ -1,0 +1,14 @@
+# The tf name of the suggested position. Currently, if goal_tf=="", we use goal_pos.
+string goal_tf
+# The position in global coordinates suggested for finding the placement options.
+float32[] goal_pos
+float32[] dims
+float32 maxHeight
+float32 radius
+float32 z_shift
+int32 candidateNum
+---
+# The position (in global coordinates) at which the placement is suggested.
+float32[] position
+# The name of the tf at which position is suggested.
+string best_tf
