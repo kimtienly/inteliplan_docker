@@ -3,11 +3,15 @@ from transformers import AutoModelForCausalLM, AutoTokenizer,  BitsAndBytesConfi
 from peft import LoraConfig,  prepare_model_for_kbit_training, get_peft_model
 
 import torch
-from huggingface_hub import login
 from trl import SFTTrainer
 torch.cuda.empty_cache()
-
-# login(token="") # uncomment this and add your token
+import os
+from huggingface_hub import login
+hf_token = os.getenv("HF_TOKEN")
+if hf_token:
+    login(hf_token)
+else:
+    print("Hugging Face token is not set. Please set HF_TOKEN environment variable.")
 
 device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 

@@ -5,10 +5,17 @@ from transformers_inference import Inference
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import rospy
 import torch
+import os
 seed=0
 torch.manual_seed(seed)
 
 robot_origin=None
+from huggingface_hub import login
+hf_token = os.getenv("HF_TOKEN")
+if hf_token:
+    login(hf_token)
+else:
+    print("Hugging Face token is not set. Please set HF_TOKEN environment variable.")
 
 def robot_function(inp):
     action_list = inp.split(',')

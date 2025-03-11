@@ -7,6 +7,7 @@ services:
     environment:
       - ROS_MASTER_URI=http://${HSR_IP}:11311
       - ROS_HOSTNAME=${YOUR_IP}
+      - HF_TOKEN=${HF_TOKEN}
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - NVIDIA_VISIBLE_DEVICES=all
