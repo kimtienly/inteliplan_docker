@@ -206,4 +206,5 @@ RUN python3 -m pip install markupsafe==2.0.1
 RUN python3 -m pip install trl==0.10.1
 RUN python3 -m pip install jinja2==3.1.2
 RUN python3 -m pip install wand
+RUN python3 -m pip install ultralytics
 RUN python3 -m pip install numpy==1.22
