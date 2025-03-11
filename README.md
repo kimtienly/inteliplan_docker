@@ -5,6 +5,10 @@ This workspace is intended for paper "InteLiPlan: Interactive Lightweight LLM-Ba
 
 More details of the paper is available at [our project page](https://kimtienly.github.io/InteLiPlan/).
 
+# Prerequisites
+- Docker
+- Git lfs (there is an example model in this repository)
+
 # Docker usage
 Use the following command to:
 - build
@@ -64,7 +68,7 @@ Launch the tmux workspace:
 rosrun inteliplan_interface run.tmux
 ```
 - The first window **robot** has two terminals: 
-    - `simulation_vision.launch` launches the robot simulation together with vision recognition
+    - `simulation_world.launch` launches the robot simulation together with vision recognition
     - `manipulation_servers_no_grasp_synthesis.launch` launches the manipulation servers, which includes a list of motion APIs.
 - The second window **inteliplan** is the main inteliplan pipeline, where you input commands and instructions for the robot.
 - Tips for tmux:
