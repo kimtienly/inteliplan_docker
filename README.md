@@ -39,7 +39,7 @@ Code for fine-tuning is in `/inteliplan/`. Run the python files in the following
 
 
 ## Run the full system with simulation
-The system was tested on the Toyota Human Support Robot (HSR). The HSR simulation package is installed after the docker was built. The simulation is operating with ROS 1.
+The system was tested on the Toyota Human Support Robot (HSR). The HSR simulation package is installed after the docker was built. The simulation is operating with ROS 1. There is a finetuned model with `fetchme` task at `src/inteliplan_robot/inteliplan_interface/checkpoints` to begin with.
 
 `inteliplan_robot` is the ROS package for the robot experiment. Proceed to `inteliplan_ws` to build and source the workspace with:
 ```bash
@@ -72,7 +72,6 @@ rosrun inteliplan_interface run.tmux
     - Ctrl+B then 1 to open **inteliplan** window
     - Ctrl+B then left arrow/right arrow to navigate between terminals on the same window.
     - Ctrl+B then [ to scroll in each terminal
-
 
 
 
