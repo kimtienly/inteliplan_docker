@@ -7,7 +7,6 @@ More details of the paper is available at [our project page](https://kimtienly.g
 
 # Prerequisites
 - Docker
-- Git lfs (there is an example model in this repository)
 
 # Docker usage
 Use the following command to:
@@ -36,6 +35,7 @@ docker exec -it inteliplan_docker bash
 ## Before you run
 - Create a Hugging Face access token: https://huggingface.co/docs/hub/en/security-tokens
 - Add your token to HF_TOKEN environment variable in `/.env`
+
 ## Fine-tune the model
 Code for fine-tuning is in `/inteliplan/`. Run the python files in the following order:
 - `create_fetchme_data.py` provide a quick example of generate csv data files. The data will be text-only as described in the paper.

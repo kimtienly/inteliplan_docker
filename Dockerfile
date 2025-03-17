@@ -11,6 +11,11 @@ WORKDIR ${ROS_WS_DIR}
 
 SHELL ["/bin/bash", "-c"]
 
+# Set up the ROS environment
+RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
+ENV ROS_DISTRO=noetic
+ENV ROS_PACKAGE_PATH=/opt/ros/noetic/share
+ENV PATH="/opt/ros/noetic/bin:$PATH"
 
 # Update package lists and install dependencies
 RUN apt-get update && apt-get install -y \
@@ -25,7 +30,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" | tee 
 
 # Update and install ROS Noetic base
 RUN apt-get update && apt-get install -y \
-    ros-noetic-ros-base \
+    ros-${ROS_DISTRO}-desktop-full \
     python3-rosdep \
     python3-rosinstall \
     python3-rosinstall-generator \
@@ -35,11 +40,6 @@ RUN apt-get update && apt-get install -y \
 # Initialize rosdep
 RUN rosdep init && rosdep update
 
-# Set up the ROS environment
-RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
-ENV ROS_DISTRO=noetic
-ENV ROS_PACKAGE_PATH=/opt/ros/noetic/share
-ENV PATH="/opt/ros/noetic/bin:$PATH"
 
 # Install additional dependencies (Optional)
 RUN apt-get update && apt-get install -y \
@@ -57,6 +57,7 @@ RUN apt-get update \
     git \
     net-tools \
     wget \
+   iputils-ping\
  && rm -rf /var/lib/apt/lists/*
 
 # Useful ROS tools
@@ -104,7 +105,7 @@ RUN apt-get update \
     python3-pyaudio \
     python3-sphinx \
  && rm -rf /var/lib/apt/lists/*
-
+RUN pip install open3d
 RUN pip install numpy
 RUN pip install numba --upgrade
 RUN pip install requests --upgrade
@@ -137,9 +138,6 @@ RUN sudo apt-get update
 RUN apt build-dep caffe-cpu -y
 RUN apt install libatlas-base-dev -y
 
-ENV DEBIAN_FRONTEND=dialog
-
-
 # ---------------------------------------------------------------
 # Use login shell to read variables from `~/.profile` (to pass dynamic created variables between RUN commands)
 SHELL ["sh", "-lc"]
@@ -156,9 +154,6 @@ ARG CUDA='cu118'
 RUN apt update && apt install -y git libsndfile1-dev tesseract-ocr espeak-ng python3 python3-pip ffmpeg git-lfs
 RUN git lfs install
 RUN python3 -m pip install --no-cache-dir --upgrade pip
-
-# ARG REF=main
-# RUN git clone https://github.com/huggingface/transformers && cd transformers && git checkout $REF
 
 # TODO: Handle these in a python utility script
 RUN [ ${#PYTORCH} -gt 0 -a "$PYTORCH" != "pre" ] && VERSION='torch=='$PYTORCH'.*' ||  VERSION='torch'; echo "export VERSION='$VERSION'" >> ~/.profile
@@ -208,3 +203,35 @@ RUN python3 -m pip install jinja2==3.1.2
 RUN python3 -m pip install wand
 RUN python3 -m pip install ultralytics
 RUN python3 -m pip install numpy==1.22
+
+# SpeechToText
+RUN apt-get update \
+ && apt-get install -y \
+   alsa-utils\
+    pulseaudio \
+    openjdk-11-jre\
+     xserver-xorg-video-all\
+   libgl1-mesa-glx libgl1-mesa-dri\
+ && rm -rf /var/lib/apt/lists/*
+RUN python3 -m pip install SpeechRecognition
+
+# For reachability graph
+RUN apt-get update \
+&& apt install -y ros-noetic-exotica
+RUN python3 -m pip install rtree
+RUN python3 -m pip install open3d
+RUN python3 -m pip install trimesh
+RUN apt-get update && apt-get install -y libzmq3-dev
+RUN python3 -m pip install --ignore-installed meshcat
+RUN python3 -m pip install networkx
+
+# Download example model from Google Drive
+RUN apt-get update && apt-get install -y unzip
+RUN python3 -m pip install gdown
+COPY download_example_model.sh /download_example_model.sh
+RUN chmod +x /download_example_model.sh
+
+# Set entrypoint to run the script before the main process
+ENTRYPOINT ["/download_example_model.sh"]
+CMD ["bash"]
+
