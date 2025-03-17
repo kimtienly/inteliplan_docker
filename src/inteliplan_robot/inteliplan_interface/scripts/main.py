@@ -66,7 +66,7 @@ robot = HSR_control()
 
 
 # Intialize the model and tokenizer
-model_path = "/inteliplan_ws/src/inteliplan_robot/inteliplan_interface/checkpoints/fetchme"
+model_path = "/inteliplan_ws/src/inteliplan_robot/inteliplan_interface/models/fetchme"
 model = AutoModelForCausalLM.from_pretrained(model_path,load_in_4bit=True, device_map="auto" )
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 

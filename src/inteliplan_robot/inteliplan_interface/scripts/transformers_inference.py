@@ -118,7 +118,7 @@ class Inference:
 
 if __name__=="__main__":
     
-    model_path = "./../checkpoints/fetchme"
+    model_path = "./../models/fetchme"
     model = AutoModelForCausalLM.from_pretrained(model_path,load_in_4bit=True, device_map="auto" )
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     torch.cuda.empty_cache()
