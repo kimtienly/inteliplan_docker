@@ -1,5 +1,5 @@
 from vision_subscriber import DetectionSubscriber
-from feasibility_subscriber import FeasibilitySubscriber
+from feasibility_graph import FeasibilitySubscriber
 from action_execution import HSR_control
 from transformers_inference import Inference
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -49,9 +49,7 @@ def robot_function(inp):
             elif temp[1]=='closer':
                 re = robot.move([0.5,0,0])
         elif temp[0]=='place':
-            # re = robot.put_object_on_surface_client([1.7, 0.9, 0.55]) #hard-coded place tf for simulation - do not delete
-            re = robot.put_object_on_surface_client([1.55, 0.85, 0.5])
-            # re = robot.put_object_on_surface_client([1.58, 0.15, 0.71]) #hard-coded place tf
+            re = robot.put_object_on_surface_client([1.7, 0.85, 0.5]) 
         if re == False:
             return False
         
@@ -73,6 +71,8 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 
 test = Inference(model, tokenizer)
 vision = DetectionSubscriber()
-feasibility = FeasibilitySubscriber()
+scene = {'scene':{'file':'../worlds/room.g', 'mesh_type': False}}
+map_bounds = [[-3, 3],[-2, 2],[0.5, 1.3]] # limits on map dimensions
+feasibility = FeasibilitySubscriber(scene, map_bounds, DEBUG=False)
 test.interactive_session(vision_func=vision.is_seen, vision_loc=vision.get_pose, feasibility_func=feasibility.get_score, robot_func=robot_function)
 rospy.spin()
