@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>reachability_graph</name>
+  <version>0.0.0</version>
+  <description>The reachability_graph package</description>
+  <maintainer email="ktien@oxfordrobotics.institute">Kim Tien Ly</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+  <author email="ktien@oxfordrobotics.institute">Kim Tien Ly</author>
+
+  <buildtool_depend>catkin</buildtool_depend>    
+  <build_depend>catkin</build_depend>
+  <build_depend>rospy</build_depend>
+
+  <!-- This is a Python-only package for now so most dependencies are runtime dependencies -->
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>exotica_core</exec_depend>
+  <exec_depend>exotica_python</exec_depend>
+  <exec_depend>python3-rtree</exec_depend>
+  <exec_depend>python3-open3d-pip</exec_depend>
+</package>

@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<ProblemInstantiation>
+
+  <BayesianIKSolver Name="MySolver" Debug="0"/>
+
+  <UnconstrainedEndPoseProblem Name="MyProblem">
+    <PlanningScene>
+      <Scene>
+        <JointGroup>whole_body</JointGroup>
+        <URDF>{reachability_graph}/urdf/hsrb/hsrb.urdf</URDF>
+        <SRDF>{reachability_graph}/urdf/hsrb/hsrb.srdf</SRDF>
+        <SetRobotDescriptionRosParams>1</SetRobotDescriptionRosParams>
+
+        <!-- Exclude some collision links for faster queries. These links are too small or covered by other links -->
+        <!-- Links that need collision checking: base_bellow_link,head_pan_link,head_tilt_link,l_forearm_link,l_gripper_l_finger_link,l_gripper_l_finger_tip_link,l_gripper_palm_link,l_gripper_r_finger_link, l_gripper_r_finger_tip_link,l_shoulder_pan_link,l_upper_arm_link,laser_tilt_mount_link,r_forearm_link,r_gripper_l_finger_link,r_gripper_l_finger_tip_link,r_gripper_palm_link,r_gripper_r_finger_link,r_gripper_r_finger_tip_link,r_shoulder_pan_link,r_upper_arm_link -->
+        <RobotLinksToExcludeFromCollisionScene>
+          base_l_drive_wheel_link, base_l_passive_wheel_z_link, base_r_drive_wheel_link, base_r_passive_wheel_z_link, base_range_sensor_link, torso_lift_link, head_pan_link, head_rgbd_sensor_link
+
+          <!-- base_footprint,bl_caster_l_wheel_link,bl_caster_r_wheel_link,bl_caster_rotation_link,br_caster_l_wheel_link,br_caster_r_wheel_link,br_caster_rotation_link,fl_caster_l_wheel_link,fl_caster_r_wheel_link,fl_caster_rotation_link,fr_caster_l_wheel_link,fr_caster_r_wheel_link,fr_caster_rotation_link,head_plate_frame,
+          l_elbow_flex_link,l_forearm_roll_link,l_gripper_motor_accelerometer_link,l_shoulder_lift_link,l_upper_arm_roll_link,l_wrist_flex_link,l_wrist_roll_link,
+          r_elbow_flex_link,r_forearm_roll_link,r_gripper_motor_accelerometer_link,r_shoulder_lift_link,r_upper_arm_roll_link, r_wrist_flex_link,r_wrist_roll_link,
+          torso_lift_link -->
+        </RobotLinksToExcludeFromCollisionScene>
+      </Scene>
+    </PlanningScene>
+
+    <Maps>
+      <!-- <EffPosition Debug="1" Name="ArmL"> -->
+      <EffPosition Debug="1" Name="Position">
+        <EndEffector>
+          <!-- This offset reorients the frame such that the hand is "open pointing forward with two fingers at the bottom -->
+          <Frame Link="hand_palm_link" LinkOffset="0 0 0" BaseOffset=" 0 0 0 0 0 0 1"/>
+          <!-- <Frame Link="l_gripper_palm_link" LinkOffset="0 0 0" BaseOffset=" 0 0 0 0 0 0 1"/> -->
+        </EndEffector>
+      </EffPosition>
+
+      <EffAxisAlignment Debug="1" Name="Angle">
+        <EndEffector>
+          <Frame Link="hand_palm_link" Axis="0 0 1"/>
+        </EndEffector>
+      </EffAxisAlignment>
+
+      <!-- Collision Avoidance -->
+      <SmoothCollisionDistance Name="Collision">
+        <CheckSelfCollision>0</CheckSelfCollision>
+        <Linear>0</Linear>
+        <RobotMargin>0.001</RobotMargin>
+        <WorldMargin>0.001</WorldMargin>
+      </SmoothCollisionDistance>
+     
+      <!-- Joint Limits -->
+      <JointLimit Name="JointLimit">
+        <SafePercentage>.01</SafePercentage>
+      </JointLimit>
+    </Maps>
+
+    <Cost>
+      <Task Task="Position" Rho="1e6"/>
+      <Task Task="Angle" Rho="0"/>
+
+      <Task Task="Collision" Rho="1e3"/>
+      <Task Task="JointLimit" Rho="1e4"/>
+    </Cost>
+    <!-- <NominalState>
+    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0 0 0</NominalState> -->
+    <W> 1 1 1 10 10 10 10 10 </W> 
+    </UnconstrainedEndPoseProblem>
+</ProblemInstantiation>
