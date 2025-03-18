@@ -151,9 +151,9 @@ class PutObjectOnSurfaceAction(ManipulationAction):
 
         rospy.loginfo("%s: Running surface detection" % self._action_name)
         # Segment surface
-        plane_transform = self.detect_plane_surface(rgbd_goal_transform)
-        found_plane = plane_transform is not None
-
+        # plane_transform = self.detect_plane_surface(rgbd_goal_transform)
+        # found_plane = plane_transform is not None
+        found_plane = False # hardcoded plane
         if found_plane:
             rospy.loginfo("%s: Received a plane transform." % self._action_name)
             target_id = "placement_plane"
@@ -228,7 +228,7 @@ class PutObjectOnSurfaceAction(ManipulationAction):
         self.whole_body.move_to_joint_positions({"wrist_roll_joint": 1.8})
         self.whole_body.move_to_joint_positions({"wrist_roll_joint": 0})
 
-    def get_relative_placement(self, object_half_height=0.05, drop_by=0.0):
+    def get_relative_placement(self, object_half_height=0.05, drop_by=0.2):
         """
         Request the surface_detection node to detect the surface location.
         Args:
@@ -266,6 +266,6 @@ class PutObjectOnSurfaceAction(ManipulationAction):
 if __name__ == "__main__":
     rospy.init_node("put_object_on_surface_server")
     server = PutObjectOnSurfaceAction(
-        "put_object_on_surface", use_collision_map=True,
+        "put_object_on_surface", use_collision_map=False,
     )
     rospy.spin()
