@@ -17,8 +17,7 @@
 
   <include file="$(find hsrb_gazebo_launch)/launch/include/hsrb_gazebo_common.xml" pass_all_args="true" >
     <arg name="map" default="$(find tmc_potential_maps)/maps/white_space/map.yaml" />
-    <!-- <arg name="world_name" value="$(find inteliplan_interface)/worlds/room_small.world" /> -->
-    <arg name="world_name" value="$(find inteliplan_interface)/worlds/shifted_world.world" />
+    <arg name="world_name" value="$(find inteliplan_interface)/worlds/room.world" />
     <arg name="robot_pos" value="-x 2.2 -y 0 -z 0 -Y 3.14" />
     <arg name="ground_truth_xyz_offset" value="-5.0\ -6.6\ 0.0" />
     <arg name="ground_truth_rpy_offset" value="0.0\ 0.0\ 0.0" />

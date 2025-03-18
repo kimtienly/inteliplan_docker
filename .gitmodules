@@ -1,0 +1,3 @@
+[submodule "src/inteliplan_robot/hsr_meshes"]
+	path = src/inteliplan_robot/hsr_meshes
+	url = https://github.com/ToyotaResearchInstitute/hsr_meshes.git

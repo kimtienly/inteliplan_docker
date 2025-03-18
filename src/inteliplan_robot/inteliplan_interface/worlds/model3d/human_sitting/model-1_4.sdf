@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+
+   <actor name="human_sitting">
+  	<static>1</static>
+    <pose>2.23 1.72 0.6 0 0 3.14</pose>
+
+  	<skin>
+            <!-- <filename>/home/ori/kim_ws/src/transformers_robot/models/human_sitting/meshes/Male/m_casual/sit.dae</filename> -->
+            <filename>/home/ori/kim_ws/src/transformers_robot/models/human_sitting/meshes/Female/w_black_dress/sit.dae</filename>
+            <scale>1</scale>
+          <pose>2.23 1.72 0.6 0 0 3.14</pose>  
+    </skin>
+        
+    <!-- <link name="link">
+      <collision name="box">
+      <pose>0 0 0 2.61 3.14 0</pose>
+        <geometry>
+          <box>
+                <size>0.6 1.5 0.6</size>
+              </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+                <size>0.0001 0.0001 0.0001</size>
+              </box>
+        </geometry>
+      </visual>
+  </link> -->
+</actor>
+</sdf>
