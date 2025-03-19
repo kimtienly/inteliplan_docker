@@ -36,16 +36,8 @@ docker exec -it inteliplan_docker bash
 - Create a Hugging Face access token: https://huggingface.co/docs/hub/en/security-tokens
 - Add your token to HF_TOKEN environment variable in `/.env`
 
-## Fine-tune the model
-Code for fine-tuning is in `/inteliplan/`. Run the python files in the following order:
-- `create_fetchme_data.py` provide a quick example of generate csv data files. The data will be text-only as described in the paper.
-- `data_csv_to_jsonl` converts the generated csv file to a jsonl format dedicated for fine-tuning.
-- `train.py` finetunes the LLM model (default: Mistral).
-- `inference.py` tests the trained model.
-
-
-## Run the full system with simulation
-The system was tested on the Toyota Human Support Robot (HSR). The HSR simulation package is installed after the docker was built. The simulation is operating with ROS 1. There is a finetuned model with `fetchme` task at `src/inteliplan_robot/inteliplan_interface/checkpoints` to begin with.
+## Run the demo simulation
+The system was tested on the Toyota Human Support Robot (HSR). The HSR simulation package is installed after the docker was built. The simulation is operating with ROS 1. There is a finetuned model with `fetchme` task at `src/inteliplan_robot/inteliplan_interface/models` to begin with.
 
 `inteliplan_robot` is the ROS package for the robot experiment. Proceed to `inteliplan_ws` to build and source the workspace with:
 ```bash
@@ -64,7 +56,6 @@ Intall octomap-server from inside docker:
 sudo apt-get install ros-noetic-octomap-server
 ```
 
-
 Launch the tmux workspace:
 ```bash
 rosrun inteliplan_interface run.tmux
@@ -80,5 +71,11 @@ rosrun inteliplan_interface run.tmux
     - Ctrl+B then [ to scroll in each terminal
 
 
+## Fine-tune the model
+Code for fine-tuning is in `/inteliplan/`. Run the python files in the following order:
+- `create_fetchme_data.py` provide a quick example of generate csv data files. The data will be text-only as described in the paper.
+- `data_csv_to_jsonl` converts the generated csv file to a jsonl format dedicated for fine-tuning.
+- `train.py` finetunes the LLM model (default: Mistral).
+- `inference.py` tests the trained model.
 
 
