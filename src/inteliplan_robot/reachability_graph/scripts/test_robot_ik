@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+
+from reachability_graph.robot import exotica_interface
+import pyexotica as exo
+from numpy import array
+import math
+from pyexotica.publish_trajectory import *
+from time import sleep
+import signal
+import rospy
+from visualization_msgs.msg import Marker, MarkerArray
+from geometry_msgs.msg import Point
+import numpy as np
+from reachability_graph.path_planning import collision_object
+from reachability_graph import configuration
+
+from pyexotica.tools import *
+import random
+
+def addCollisionObject(object_list):
+    for object_ in object_list: # list of [Object] type
+        mesh = object_.exo_mesh
+        color = object_.color
+        scene.add_object_to_environment(name="scene", color=(color[0], color[1], color[2], 1.0),
+                shape=mesh,transform=exo.KDLFrame(object_.loc))
+
+
+def visualiseGoal():
+    pub = rospy.Publisher("target", MarkerArray, queue_size=1)
+    sleep(0.5)
+    msg = MarkerArray()
+    m = Marker()
+    m.header.frame_id = "exotica/world_frame"
+
+    # m.type = Marker.SPHERE_LIST
+    m.type = Marker.LINE_LIST
+    m.pose.orientation.w = 0.0
+    m.color.a = 1.0
+    m.color.r = 1.0
+    m.scale.x = 0.05
+    for i in range(1, path_positions.shape[1]):
+        m.points.append(Point(*path_positions[:, i - 1]))
+        m.points.append(Point(*path_positions[:, i]))
+    msg.markers.append(m)
+    pub.publish(msg)
+
+def randomize_joint_values(limits):
+    n = limits.shape[0]
+    joint_values = []
+    for i in range(n):
+        lower_limit, upper_limit = limits[i]
+        joint_value = random.uniform(lower_limit, upper_limit)
+        joint_values.append(joint_value)
+    return joint_values
+
+def figure_eight(t):
+    return array([0.6, -0.1 + math.sin(t * 2.0 * math.pi * 0.5) * 0.1, 0.5 + math.sin(t * math.pi * 0.5) * 0.2])
+
+rospy.init_node("ik_test")
+
+# my_goal = [[3.3,  1,  0.85],[ 0., -3., 0.77]]
+# my_goal = [[3.3,  1,  0.85],[ 3., -3., 0.77],[2.6,  1.2,  0.85],[0.0, 2.0, 0.7700000166893005] ]
+# target_path = [[2.4000000953674316, 0, 0.85],[0.0, 2.1, 0.7700000166893005]]
+# target_path  = [[1.65585, 0.761256, 0.907601], [1.65585, 0.761256, 0.907601], [1.64599, 0.697469, 0.793488], [1.06881, 0.600836, 1.07404], [0.828727, -0.148253, 1.36462], [1.13574, -0.924759, 1.39706], [0.168967, -1.83438, 1.51708], [0.0202925, -3.10447, 0.927601], [0.0202925, -3.10447, 0.927601],[0.0202925, -3.10447, 0.927601], [0.0202925, -3.10447, 0.927601], [0.492982, -3.07027, 1.31582], [1.0033, -1.77771, 1.40107], [1.46651, -1.35735, 0.87292], [2.48195, -0.992749, 1.23722], [3.55851, -0.113412, 1.39302], [3.44343, 1.37543, 0.985374], [2.74707, 1.27243, 1.18529], [2.59261, 1.12661, 0.878848], [2.59261, 1.12661, 0.878848],[2.59261, 1.12661, 0.878848], [2.59261, 1.12661, 0.878848], [2.74707, 1.27243, 1.18529], [3.44343, 1.37543, 0.985374], [3.55851, -0.113412, 1.39302], [2.48195, -0.992749, 1.23722], [1.46449, -0.657328, 1.10962], [0.158, 0.078, 1.0255], [0.0350142, 2.05606, 0.898816], [0.0715651, 2.16213, 0.89885], [0.0715651, 2.16213, 0.89885]]
+# target_path = [[2.61036, 1.12687, 0.908662], [2.61036, 1.12687, 0.908662], [3.00464, 1.18091, 1.08439], [2.91813, 0.770672, 1.82922], [2.01476, -0.948938, 1.39291], [1.11674, -1.04024, 0.769821], [0.632439, 0.387879, 1.01946], [0.427316, 1.93043, 1.55947], [0.0881839, 2.16485, 0.923161], [0.0881839, 2.16485, 0.923161],[0.0881839, 2.16485, 0.923161], [0.0881839, 2.16485, 0.923161], [-0.290933, 2.1194, 0.718065], [0.11578, 2.23958, 1.04029], [0.886817, 1.11913, 0.912517], [1.64399, 0.752651, 0.827693], [1.64399, 0.752651, 0.827693],[1.64399, 0.752651, 0.827693], [1.64399, 0.752651, 0.827693], [1.26093, 0.533818, 0.776276], [0.513774, 0.185649, 1.49822], [-0.177242, -1.29631, 1.58296], [-0.113263, -3.10896, 0.847697], [-0.113263, -3.10896, 0.847697],[-0.113263, -3.10896, 0.847697], [-0.113263, -3.10896, 0.847697], [0.37008, -2.24568, 1.53987], [0.421433, -0.991272, 1.32997], [0.163577, 0.0860135, 1.01474], [0.163577, 0.0860135, 1.01474]] # end-effector path going around table
+
+target_path = [[1.15607, -0.50443, 0.695221], [1.15607, -0.50443, 0.695221], [1.05881, -0.263934, 0.305837], [1.02239, 0.492401, 0.199005], [-0.14158, 1.42988, 0.627341], [-0.154274, 1.66647, 1.12112], [0.113146, 1.4947, 1.58979], [0.113146, 1.4947, 1.58979],[0.326155, 1.76966, 2.08806], [0.326155, 1.76966, 2.08806], [-0.00375164, 1.50315, 1.20665], [-0.14158, 1.42988, 0.627341], [-0.220355, -0.406145, 0.720463], [2.34233, -0.538954, 0.808594], [3.27109, -0.318374, 0.970103], [2.93046, 1.22643, -0.141412], [2.93008, 1.58055, -1.68899], [2.93008, 1.58055, -1.68899],[2.93058, 0.946883, 2.11331], [2.93058, 0.946883, 2.11331], [3.08277, 0.968642, 1.84082], [3.27109, -0.318374, 0.970103], [2.34233, -0.538954, 0.808594], [1.01691, -2.27769, 0.175822], [-0.125444, -2.51611, -1.46563], [0.164697, -2.47743, -1.9615], [0.164697, -2.47743, -1.9615],[-0.435942, -2.60937, -0.936321], [-0.435942, -2.60937, -0.936321], [-0.49964, -2.76244, -0.820343], [-0.678665, -2.69564, -0.134989], [0.292212, -1.51869, 1.06854], [0.0827889, 0.230483, -1.53244], [0.0827889, 0.230483, -1.53244]] # base path going around table
+for row in target_path:
+    row[2] = 0.5 # replace yaw with 0.5 for z
+# [2.6,  1.2,  0.85],[0.0, 2.0, 0.7700000166893005] 
+path_positions = np.asarray(target_path).T
+
+# my_goal = [[1.71729, -0.352522, 1.63958], [1.32334, -0.542276, 0.631885], [0.998675, -1.22793, 0.930396], [0.400107, -1.83228, 1.35082], [0.397008, -0.888456, 1.45853], [0.0463151, -0.277077, 1.91762], [-0.0829624, 1.14677, 1.95042], [0.58328, 0.914517, 1.25733], [0, -3, 0.77], [-0.514003, -2.49649, 0.36556], [0.0119087, -0.00367095, 1.65288]]
+# path_positions = np.asarray(my_goal).T
+
+
+# Drawing 8
+# dt = 0.1
+# t = 0.0
+# target_path = []
+# for i in range(2000):
+#     target_path.append(figure_eight(t+dt*i))
+# path_positions = np.asarray(target_path).T
+
+visualiseGoal()
+
+exo.Setup.init_ros()
+solver = exo.Setup.load_solver(
+    '{reachability_graph}/resources/exotica/hsrb/hsrb_ik.xml')
+problem = solver.get_problem()
+scene = problem.get_scene()
+joint_limits = scene.get_kinematic_tree().get_joint_limits()
+# joint_limits[0]=[-10,10]
+# joint_limits[1]=[-10,10]
+joint_limits = (np.asarray(joint_limits))/5 # avoid contorted poses
+joint_limits[0]=[-10,10]
+joint_limits[1]=[-10,10]
+print(joint_limits)
+print(scene.get_model_joint_names())
+# print(len(scene.get_model_link_names()))
+print(scene.get_controlled_joint_names())
+# print(scene.get_controlled_link_names())
+# print(scene.get_model_state_map())
+
+
+# add collision to exotica scene
+print('Adding collision scene..')
+collision_objects = collision_object.CollisionObjectWrapper()
+collision_objects.load_collision_objects(configuration.fixed_object_list_exotica)
+addCollisionObject(collision_objects.objects_list)
+
+print('Publishing IK')
+signal.signal(signal.SIGINT, sig_int_handler)
+
+i=0
+# print(problem.get_cost_evolution()[1][-1])
+# print('check_trajectory_continuous_time():',check_trajectory_continuous_time(scene,np.asarray([q1,q2])))
+# print('check_whether_trajectory_is_collision_free_by_subsampling:',check_whether_trajectory_is_collision_free_by_subsampling(scene,np.asarray([q1,q2]),num_subsamples=100))
+max_trials = 5
+while True:
+    try:
+        cnt_trial = 0
+        best_cost = 0
+        best_q  = None
+
+        problem.set_goal('Position', target_path[i])        
+        # q_best = solver.solve()[0]
+        while cnt_trial<max_trials:
+            random_start = randomize_joint_values(joint_limits)
+
+            # problem.start_state = random_start[:3] + [0]*12 + [random_start[3]] + [0]*2 + random_start[4:11] + [0]*8 + random_start[11:] + [0]*8 #pr2
+            problem.start_state = random_start + [0]*21 #hsrb
+            # problem.start_state = random_start[:3]+[0]*45
+            q = solver.solve()[0]
+
+            print(problem.get_scalar_cost())
+            if best_cost==0 or best_cost>problem.get_scalar_cost():
+                best_cost = problem.get_scalar_cost()
+                q_best = q
+                print(q)
+            cnt_trial+=1
+        print('best cost ',best_cost)
+        publish_pose(q_best, problem)
+        sleep(0.5)
+        i+=1
+        if i==len(target_path):
+            i=0
+    except KeyboardInterrupt:
+        break
